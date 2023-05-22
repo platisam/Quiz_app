@@ -1,5 +1,7 @@
+import Quiz from "./Quiz";
+
 function App() {
-  return <h1>Quiz App</h1>;
+  return <Quiz />;
 }
 
 export default App;
