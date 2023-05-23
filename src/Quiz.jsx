@@ -16,6 +16,8 @@ const Quiz = ({ questions }) => {
     }
   };
 
+  const onClickNext = () => {};
+
   return (
     <div className="quiz-container">
       <>
@@ -23,16 +25,21 @@ const Quiz = ({ questions }) => {
         <span className="total-question">/{questions.length}</span>
         <h2>{question}</h2>
         <ul>
-          {choices.map((answer, index) => (
+          {choices.map((choice, index) => (
             <li
-              onClick={() => onAnswerClick(answer, index)}
-              key={answer}
+              onClick={() => onAnswerClick(choice, index)}
+              key={choice}
               className={answerIdx === index ? "selected-answer" : null}
             >
-              {answer}
+              {choice}
             </li>
           ))}
         </ul>
+        <div className="footer">
+          <button onClick={onClickNext} disabled={answerIdx === null}>
+            {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
+          </button>
+        </div>
       </>
     </div>
   );
