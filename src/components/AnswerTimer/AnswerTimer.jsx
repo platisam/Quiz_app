@@ -1,8 +1,9 @@
 import "./AnswerTimer.scss";
 import { useEffect, useState, useRef } from "react";
 
-const AnswerTimer = () => {
+const AnswerTimer = ({ duration }) => {
   const [counter, setCounter] = useState(0);
+  const [progressLoaded, setProgressLoaded] = useState(0);
   const intervalRef = useRef();
 
   useEffect(() => {
@@ -10,8 +11,16 @@ const AnswerTimer = () => {
       setCounter((cur) => cur + 1);
     }, 1000);
 
-    return () => clearInterval(intervalRef);
+    return () => clearInterval(intervalRef.current);
   }, []);
+
+  useEffect(() => {
+    setProgressLoaded(100 * (counter / duration));
+
+    if (counter === duration) {
+      clearInterval(intervalRef.current);
+    }
+  }, [counter]);
 
   return (
     <div className="answer-timer-container">
