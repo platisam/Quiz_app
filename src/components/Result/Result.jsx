@@ -1,10 +1,14 @@
 import "./Result.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Result = ({ totalQuestions, result, onTryAgain }) => {
   const [name, setName] = useState("");
   const [highScores, setHighScores] = useState([]);
   const [showScores, setShowScores] = useState(false);
+
+  useEffect(() => {
+    setHighScores(JSON.parse(localStorage.getItem("highScores")));
+  }, []);
 
   const handleSave = () => {
     const score = {
@@ -18,6 +22,12 @@ const Result = ({ totalQuestions, result, onTryAgain }) => {
     setHighScores(newHighScores);
     setShowScores(true);
     localStorage.setItem("highScores", JSON.stringify(newHighScores));
+  };
+
+  const handleTryAgain = () => {
+    setShowScores(false);
+    setHighScores([]);
+    onTryAgain();
   };
 
   return (
@@ -35,7 +45,7 @@ const Result = ({ totalQuestions, result, onTryAgain }) => {
       <p>
         Wrong Answers: <span>{result.wrongAnswers}</span>
       </p>
-      <button onClick={onTryAgain}>Try Again</button>
+      <button onClick={handleTryAgain}>Try Again</button>
       {!showScores ? (
         <>
           <h3>
@@ -61,7 +71,7 @@ const Result = ({ totalQuestions, result, onTryAgain }) => {
             <tbody>
               {highScores.map((highScore, i) => {
                 return (
-                  <tr key={i}>
+                  <tr key={`${highScore.score}${highScore.name}${i}`}>
                     <td>{i + 1}</td>
                     <td>{highScore.name}</td>
                     <td>{highScore.score}</td>
