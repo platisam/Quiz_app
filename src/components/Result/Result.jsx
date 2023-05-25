@@ -36,7 +36,7 @@ const Result = ({ totalQuestions, result, onTryAgain }) => {
         Wrong Answers: <span>{result.wrongAnswers}</span>
       </p>
       <button onClick={onTryAgain}>Try Again</button>
-      {!shorScores ? (
+      {!showScores ? (
         <>
           <h3>
             Enter your name bellow <br /> to save your score!
@@ -44,11 +44,34 @@ const Result = ({ totalQuestions, result, onTryAgain }) => {
           <input
             placeholder="Your Name"
             value={name}
-            onChange={(e) => setName(e.target.name)}
+            onChange={(e) => setName(e.target.value)}
           />
           <button onClick={handleSave}>Save</button>
         </>
-      ) : ()}
+      ) : (
+        <>
+          <table>
+            <thead>
+              <tr>
+                <th>Ranking</th>
+                <th>Name</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {highScores.map((highScore, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{i + 1}</td>
+                    <td>{highScore.name}</td>
+                    <td>{highScore.score}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </>
+      )}
     </div>
   );
 };
