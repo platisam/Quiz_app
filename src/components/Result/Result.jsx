@@ -17,6 +17,7 @@ const Result = ({ totalQuestions, result, onTryAgain }) => {
     );
     setHighScores(newHighScores);
     setShowScores(true);
+    localStorage.setItem("highScores", JSON.stringify(newHighScores));
   };
 
   return (
@@ -35,17 +36,19 @@ const Result = ({ totalQuestions, result, onTryAgain }) => {
         Wrong Answers: <span>{result.wrongAnswers}</span>
       </p>
       <button onClick={onTryAgain}>Try Again</button>
-      <>
-        <h3>
-          Enter your name bellow <br /> to save your score!
-        </h3>
-        <input
-          placeholder="Your Name"
-          value={name}
-          onChange={(e) => setName(e.target.name)}
-        />
-        <button onClick={handleSave}>Save</button>
-      </>
+      {!shorScores ? (
+        <>
+          <h3>
+            Enter your name bellow <br /> to save your score!
+          </h3>
+          <input
+            placeholder="Your Name"
+            value={name}
+            onChange={(e) => setName(e.target.name)}
+          />
+          <button onClick={handleSave}>Save</button>
+        </>
+      ) : ()}
     </div>
   );
 };
