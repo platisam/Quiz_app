@@ -54,6 +54,7 @@ const Quiz = ({ questions }) => {
   const onTryAgain = () => {
     setResult(resultInitialState);
     setShowResult(false);
+    setInputAnswer(null);
   };
 
   const handleTimeUp = () => {
@@ -96,7 +97,7 @@ const Quiz = ({ questions }) => {
       {!showResult ? (
         <>
           {showAnswerTimer && (
-            <AnswerTimer duration={5} onTimeUp={handleTimeUp} />
+            <AnswerTimer duration={10} onTimeUp={handleTimeUp} />
           )}
           <span className="active-question-no">{currentQuestion + 1}</span>
           <span className="total-question">/{questions.length}</span>
@@ -105,7 +106,7 @@ const Quiz = ({ questions }) => {
           <div className="footer">
             <button
               onClick={() => onClickNext(answer)}
-              disabled={answerIdx === null}
+              disabled={answerIdx === null && !inputAnswer}
             >
               {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
             </button>

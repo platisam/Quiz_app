@@ -8,8 +8,8 @@ const AnswerTimer = ({ duration, onTimeUp }) => {
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
-      setCounter((cur) => cur + 1);
-    }, 1000);
+      setCounter((cur) => cur + 0.1);
+    }, 100);
 
     return () => clearInterval(intervalRef.current);
   }, []);
@@ -17,12 +17,10 @@ const AnswerTimer = ({ duration, onTimeUp }) => {
   useEffect(() => {
     setProgressLoaded(100 * (counter / duration));
 
-    if (counter === duration) {
+    if (counter >= duration) {
       clearInterval(intervalRef.current);
 
-      setTimeout(() => {
-        onTimeUp();
-      }, 1000);
+      onTimeUp();
     }
   }, [counter]);
 
